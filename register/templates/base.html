@@ -1,0 +1,57 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'compware/header.css' %}">
+        <link rel="stylesheet" href="{% static 'compware/style.css' %}" >
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    </head>
+
+  
+        <main>
+            <div class="header"> <!--container (div) named "header" will be used to hold all information that we want to appear as the sticky header of our webpage-->
+                <img class="logo" src="{% static '/images/compware.png' %}" height = "150px" width = "200px">
+                <h1 class="title" >Compware</h1>
+                <nav class="menu">
+                  <a href="#" id="home"><b>Home</b></a> <!--home button exists bottom and right, just above the end of the page-->
+                  <a href="/compware/about" id="aboutlink" class="About">About Compware</a>
+                  <a href="/compware" class="Index">Index</a>
+                  <a href="/login" class="login">Login</a>
+                  <a href="/logout" class="logout"> Logout</a>
+                  <a href="/register" class="register">Register</a>
+                  <a href="#" class="profile">Profile</a>
+                </nav>
+              </div>
+              <br></br>
+            <div class="container">
+            	{% if messages %}
+				{% for message in messages %}
+					<div class="alert alert-{{message.tags}}">
+					       {{message}}
+					     </div>
+					   {% endfor %}
+				{% endif %}
+            
+             {%block content %}
+             {%endblock content%}
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <p>© Copyright {% now "Y" %} by <a href="https://www.instagram.com/pkskavantzos/">Panagiotis K. Skavantzos</a></p>
+            </div>
+        </footer>
+    </body>
+
+</html>

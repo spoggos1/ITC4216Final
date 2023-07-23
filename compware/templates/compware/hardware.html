@@ -1,0 +1,94 @@
+{% extends "compware/layout.html" %}
+{% load static %}
+{% block body %}
+    <title> Hardware </title>
+    
+    <div class="header"> <!--container (div) named "header" will be used to hold all information that we want to appear as the sticky header of our webpage-->
+      <img class="logo" src="{% static '/images/compware.png' %}" height = "150px" width = "200px">
+      <h1 class="title" >Compware</h1>
+      <nav class="menu">
+        <a href="#" id="home"><b>Home</b></a> <!--home button exists bottom and right, just above the end of the page-->
+        <a href="/compware/about" id="aboutlink" class="About">About Compware</a>
+        <a href="{% url 'index' %}" class="Index">Index</a>
+        <a href="{% url 'login' %}" class="login">Login</a>
+        <a href="{% url 'logout' %}" class="logout"> Logout</a>
+        <a href="{% url 'register' %}" class="register">Register</a>
+        <a href="{% url 'profile' %}" class="profile">Profile</a>
+      </nav>
+    </div>
+    <br></br>
+    <h1 style="text-align:center">Hardware</h1>
+    <br></br>
+    <div class="container" style="border: 1px solid black">
+      {% if user.is_superuser %}
+
+      <p> Administrators-only Area: Please click  <a href="/admin" class="admin"> here </a> to view and edit the website.</p> 
+      <br></br>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <p> Thank you for choosing Compware, <b> {{user.username}}</b>! Feel free to browse our store by category or subcategory, found in the menu underneath. <br></br> Alternatively, you can use the search function. </p>
+    <h3>Menu</h3>
+    <p>Browse our store by category or subcategory.</p>
+    
+  <div class="dropdown">
+    <button class="dropbtn">Menu</button>
+    <div class="dropdown-content">
+      <a href="{% url 'hardware' %}">Hardware</a>
+      <a href="{% url 'software' %}">Software</a>
+      <a href="{% url 'computingcomponents' %}">Computing Components</a>
+      <a href="{% url 'networkingcomponents' %}">Networking Components</a>
+      <a href="{% url 'operatingsystem' %}">Operating System</a>
+      <a href="{% url 'utilitysoftware' %}">Utility Software</a>
+      <a href="{% url 'peripherals' %}">Peripherals</a>
+      <a href="{% url 'antivirus' %}">Antivirus</a>
+
+    </div>
+  </div>
+
+    </div>
+      </div>
+    </div>
+    
+    <br></br>
+    <br></br>
+     {% endif %}
+     <h3 class="text-center"> Search Engine</h3>
+    <br></br>
+    <form method="get" action="/search/" id="srcheader">
+      {% csrf_token %}
+      Search for the item of your choice: <input type="text" name="q" id="id_q" value="{{ query }}" placeholder="Search"/>
+      <input type="submit" value="Submit" />
+    </form>
+
+    {% if user.is_authenticated %}
+    <div class="container pt-4">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <th class="text-center">Item Name</th>
+                    <th class="text-center">Item Price</th>
+                    <th class="text-center">Item Category</th>
+                    <th class="text-center">Item Subcategory</th>
+                    <th class="'text-center"> Item Image</th>
+                  </tr>
+                </thead>
+                <tr>
+                  {% for item in Item %}
+                    <tr>
+                        <tbody>
+                            <td class="text-center">{{ item.item_name }}</td>
+                            <td class="text-center">{{ item.item_price }} &euro;</td>
+                            <td class="text-center">{{ item.item_category }}</td>
+                            <td class="text-center">{{ item.item_subcat }}</td>
+                            <td class="'text-center"><img src="{{ item.item_image.url }}" width="120" height="120" alt="image"></td>
+                        </tbody>
+                      
+                    </tr>
+                  {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}
